@@ -130,7 +130,7 @@ function parseFormMarkdown(md) {
  * @returns {FormField}
  */
 function parseField(name, section) {
-  const field = { name, type: "text" };
+  const field = { name, type: "" };
   const lines = section.split("\n");
 
   for (const line of lines) {

@@ -6,7 +6,7 @@
   const app = document.getElementById("app");
 
   // Determine which form to load from URL path
-  const path = location.pathname.replace(/\/$/, "") || "/forms/contact";
+  const path = location.pathname.replace(/\/$/, "") || "/forms/index";
   const mdPath = path.endsWith(".md") ? path : `${path}.md`;
 
   // Fetch the markdown (relative to this site)
@@ -173,6 +173,12 @@ function parseFrontmatter(text) {
  * @param {HTMLElement} container
  */
 function render(spec, container) {
+  // If no fields, render as a simple page (index/sitemap)
+  if (spec.fields.length === 0) {
+    renderIndex(spec, container);
+    return;
+  }
+
   // Build style
   let css = spec.css || "";
   for (const field of spec.fields) {
@@ -282,4 +288,50 @@ async function handleSubmit(spec) {
       console.error("Submit failed:", err);
     }
   }
+}
+
+/**
+ * Render an index/sitemap page from markdown with links.
+ * @param {FormSpec} spec
+ * @param {HTMLElement} container
+ */
+function renderIndex(spec, container) {
+  let html = `<h1>${spec.title}</h1>`;
+  if (spec.description) {
+    // Parse inline links in description
+    const desc = spec.description.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2">$1</a>'
+    );
+    html += `<p class="description">${desc}</p>`;
+  }
+
+  // Re-parse the raw markdown for ## headings and list items with links
+  // We need the raw body — fetch it again from the parsed description area
+  // Actually, let's just re-fetch and do a simple markdown-to-html for index pages
+  const mdPath = (location.pathname.replace(/\/$/, "") || "/forms") + ".md";
+  fetch(mdPath).then(r => r.text()).then(md => {
+    const body = md.replace(/^---[\s\S]*?---\n/, "");
+    // Convert ## headings
+    let rendered = body.replace(/^## (.+)$/gm, "<h2>$1</h2>");
+    // Convert links in list items
+    rendered = rendered.replace(/^- \[([^\]]+)\]\(([^)]+)\)$/gm,
+      '<li><a href="$2">$1</a></li>');
+    // Wrap consecutive <li> in <ul>
+    rendered = rendered.replace(/((?:<li>.*<\/li>\n?)+)/g, "<ul>$1</ul>");
+    // Convert # heading
+    rendered = rendered.replace(/^# (.+)$/m, "<h1>$1</h1>");
+    // Convert inline links in paragraphs
+    rendered = rendered.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    // Remove empty lines
+    rendered = rendered.replace(/^\s*$/gm, "");
+
+    container.innerHTML = `<style>
+      ul { list-style: none; padding: 0; }
+      li { margin: 0.5rem 0; }
+      a { color: #2563eb; text-decoration: none; font-size: 1.1rem; }
+      a:hover { text-decoration: underline; }
+      h2 { margin-top: 2rem; margin-bottom: 0.5rem; color: #555; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    </style>${rendered}`;
+  });
 }

@@ -6,13 +6,13 @@
   const app = document.getElementById("app");
 
   // Determine which form to load from URL path
-  // Handle GitHub Pages base path (e.g. /hotel-markdown/)
-  const base = document.querySelector("base")?.getAttribute("href") || "";
+  // Strip base path (GitHub Pages serves from /repo-name/)
+  const base = (document.querySelector("base")?.getAttribute("href") || "/").replace(/\/$/, "");
   const raw = location.pathname.replace(/\/$/, "");
-  const path = raw === base.replace(/\/$/, "") || raw === "" ? "/forms/index" : raw.replace(base.replace(/\/$/, ""), "");
-  const mdPath = path.endsWith(".md") ? path : `${path}.md`;
+  const path = raw === base || raw === "" ? "forms/index" : raw.replace(base + "/", "");
+  const mdPath = (path.endsWith(".md") ? path : path + ".md");
 
-  // Fetch the markdown (relative to this site)
+  // Fetch the markdown (relative URL — works with <base> tag)
   let md;
   try {
     const resp = await fetch(mdPath);
@@ -312,7 +312,10 @@ function renderIndex(spec, container) {
   // Re-parse the raw markdown for ## headings and list items with links
   // We need the raw body — fetch it again from the parsed description area
   // Actually, let's just re-fetch and do a simple markdown-to-html for index pages
-  const mdPath = (location.pathname.replace(/\/$/, "") || "/forms") + ".md";
+  const base2 = (document.querySelector("base")?.getAttribute("href") || "/").replace(/\/$/, "");
+    const raw2 = location.pathname.replace(/\/$/, "");
+    const p = raw2 === base2 || raw2 === "" ? "forms/index" : raw2.replace(base2 + "/", "");
+    const mdPath = (p.endsWith(".md") ? p : p + ".md");
   fetch(mdPath).then(r => r.text()).then(md => {
     const body = md.replace(/^---[\s\S]*?---\n/, "");
     // Convert ## headings

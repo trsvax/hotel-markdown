@@ -7,14 +7,14 @@ form: index
 Forms as markdown. One HTML file renders them. [Source](https://github.com/trsvax/hotel-markdown) | [Tapestry NoCode](https://github.com/trsvax/tapestry-nocode)
 
 ## About
-- [About this project](/forms/about)
+- [About this project](about)
 
 ## Contact
-- [Contact Form](/forms/contact)
+- [Contact Form](contact)
 
 ## Hotel Booking
-- [Search](/forms/booking/search)
-- [Room Selection](/forms/booking/room)
-- [Guest Details](/forms/booking/guest)
-- [Payment](/forms/booking/payment)
-- [Confirmation](/forms/booking/confirm)
+- [Search](booking/search)
+- [Room Selection](booking/room)
+- [Guest Details](booking/guest)
+- [Payment](booking/payment)
+- [Confirmation](booking/confirm)

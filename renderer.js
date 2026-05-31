@@ -21,7 +21,17 @@
     if (!resp.ok) throw new Error(`${resp.status}`);
     md = await resp.text();
   } catch (err) {
-    app.innerHTML = `<p>Form not found: <code>${mdPath}</code></p>`;
+    const fetchUrl = new URL(mdPath, document.baseURI).href;
+    app.innerHTML = `<p>Form not found: <code>${mdPath}</code></p>
+      <pre style="font-size:0.75rem;color:#888;margin-top:1rem">
+pathname: ${location.pathname}
+segments: ${JSON.stringify(segments)}
+path: ${path}
+mdPath: ${mdPath}
+baseURI: ${document.baseURI}
+fetchUrl: ${fetchUrl}
+error: ${err.message}
+      </pre>`;
     return;
   }
 

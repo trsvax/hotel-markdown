@@ -11,7 +11,15 @@
   const segments = location.pathname.split("/").filter(Boolean);
   // Remove repo name if present (e.g. "hotel-markdown")
   if (segments[0] === "hotel-markdown") segments.shift();
-  const path = segments.length === 0 ? "forms/index" : segments.join("/");
+  // Default to forms/index, and prepend forms/ if not already there
+  let path;
+  if (segments.length === 0) {
+    path = "forms/index";
+  } else if (segments[0] !== "forms") {
+    path = "forms/" + segments.join("/");
+  } else {
+    path = segments.join("/");
+  }
   const mdPath = (path.endsWith(".md") ? path : path + ".md");
 
   // Fetch the markdown

@@ -2,6 +2,8 @@
 
 Forms as markdown. One HTML file renders them. No framework, no build step, no server.
 
+**Live:** [blog.trsvax.com/hotel-markdown](http://blog.trsvax.com/hotel-markdown/)
+
 ## How it works
 
 1. Write a form as a `.md` file (see `forms/contact.md`)

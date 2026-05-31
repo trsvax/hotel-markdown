@@ -6,7 +6,7 @@ form: about
 
 ## What is this?
 
-A hotel booking app described in 6 markdown files, rendered by 285 lines of JavaScript. No framework. No server. No database. No build step. Deployed on GitHub Pages for free.
+A hotel booking app described in 6 markdown files, rendered by 285 lines of JavaScript. No framework. No server. No database. No build step. Deployed on GitHub Pages for free. Built in 30 minutes.
 
 ## The alternative
 
@@ -14,7 +14,7 @@ A hotel booking app described in 6 markdown files, rendered by 285 lines of Java
 
 ## This approach
 
-6 markdown files. 285 lines of JS. One HTML file. ~5-10k tokens to build. No bugs to debug because there's barely any code to be buggy.
+6 markdown files. 285 lines of JS. One HTML file. ~5-10k tokens to build. 30 minutes. No bugs to debug because there's barely any code to be buggy.
 
 The markdown files are readable by anyone. The vibe-coded version is readable by the AI that wrote it.
 

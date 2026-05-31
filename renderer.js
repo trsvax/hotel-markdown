@@ -6,16 +6,18 @@
   const app = document.getElementById("app");
 
   // Determine which form to load from URL path
-  // Strip base path (GitHub Pages serves from /repo-name/)
-  const base = (document.querySelector("base")?.getAttribute("href") || "/").replace(/\/$/, "");
-  const raw = location.pathname.replace(/\/$/, "");
-  const path = raw === base || raw === "" ? "forms/index" : raw.replace(base + "/", "");
+  // On GitHub Pages: pathname is /hotel-markdown/ or /hotel-markdown/forms/contact
+  // Strip any known base prefix, default to forms/index
+  const segments = location.pathname.split("/").filter(Boolean);
+  // Remove repo name if present (e.g. "hotel-markdown")
+  if (segments[0] === "hotel-markdown") segments.shift();
+  const path = segments.length === 0 ? "forms/index" : segments.join("/");
   const mdPath = (path.endsWith(".md") ? path : path + ".md");
 
-  // Fetch the markdown (relative URL — works with <base> tag)
+  // Fetch the markdown
   let md;
   try {
-    const resp = await fetch(mdPath);
+    const resp = await fetch(new URL(mdPath, document.baseURI).href);
     if (!resp.ok) throw new Error(`${resp.status}`);
     md = await resp.text();
   } catch (err) {

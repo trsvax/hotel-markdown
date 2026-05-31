@@ -6,7 +6,10 @@
   const app = document.getElementById("app");
 
   // Determine which form to load from URL path
-  const path = location.pathname.replace(/\/$/, "") || "/forms/index";
+  // Handle GitHub Pages base path (e.g. /hotel-markdown/)
+  const base = document.querySelector("base")?.getAttribute("href") || "";
+  const raw = location.pathname.replace(/\/$/, "");
+  const path = raw === base.replace(/\/$/, "") || raw === "" ? "/forms/index" : raw.replace(base.replace(/\/$/, ""), "");
   const mdPath = path.endsWith(".md") ? path : `${path}.md`;
 
   // Fetch the markdown (relative to this site)

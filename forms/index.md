@@ -18,3 +18,6 @@ Forms as markdown. One HTML file renders them. [Source](https://github.com/trsva
 - [Guest Details](/hotel-markdown/forms/booking/guest)
 - [Payment](/hotel-markdown/forms/booking/payment)
 - [Confirmation](/hotel-markdown/forms/booking/confirm)
+
+## Journal
+- [AI Mock Backend](/hotel-markdown/forms/journal/ai-mock-backend)

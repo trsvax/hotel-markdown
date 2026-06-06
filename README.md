@@ -4,6 +4,20 @@ Forms as markdown. One HTML file renders them. No framework, no build step, no s
 
 **Live:** [blog.trsvax.com/hotel-markdown](http://blog.trsvax.com/hotel-markdown/)
 
+## For AI
+
+Read [AGENTS.md](AGENTS.md). It explains the pattern and how to build a new application from this.
+
+## Personal steering
+
+The `steering/` directory contains portable AI instructions. To use them across all your workspaces:
+
+```bash
+./setup-steering.sh ~/github/theTube/hotel-markdown
+```
+
+This symlinks into `~/.kiro/steering/` (Kiro) and creates `~/copilot-instructions.md` (VS Code Copilot). Your personal steering applies everywhere without being committed to other repos.
+
 ## How it works
 
 1. Write a form as a `.md` file (see `forms/contact.md`)
